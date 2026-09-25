@@ -1,0 +1,1 @@
+import {getRepoSummary} from "./github";import {readProject} from "./supabase";export const tools={repo:async()=>getRepoSummary(),projects:async()=>readProject()};
