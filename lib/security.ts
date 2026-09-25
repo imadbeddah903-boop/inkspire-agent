@@ -1,0 +1,1 @@
+export function safeRepoPath(path:string){if(path.includes("..")||path.startsWith("/"))throw new Error("unsafe repository path");return path;}export function requireApproval(approved:boolean){if(!approved)throw new Error("approval required before write operation");}
