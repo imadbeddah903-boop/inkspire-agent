@@ -1,0 +1,1 @@
+import {Redis} from "@upstash/redis";import {env} from "./env";const redis=new Redis({url:env.upstashUrl,token:env.upstashToken});export async function setApproval(id:string,approved:boolean){await redis.set(`approval:${id}`,{approved,at:new Date().toISOString()});}export async function getApproval(id:string){return redis.get(`approval:${id}`);}
