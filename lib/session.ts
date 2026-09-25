@@ -1,0 +1,1 @@
+export function sessionId(req:Request){return req.headers.get("x-agent-session")||"anonymous";}
