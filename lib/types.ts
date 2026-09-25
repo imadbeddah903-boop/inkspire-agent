@@ -1,0 +1,1 @@
+export type AgentResult={text:string;toolsAvailable?:string[]};export type Approval={id:string;approved:boolean;at:string};
