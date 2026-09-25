@@ -1,0 +1,3 @@
+import {NextResponse} from "next/server";
+import {runAgent} from "@/lib/agent";
+export async function POST(req:Request){try{const {message}=await req.json();if(typeof message!=="string"||!message.trim())return NextResponse.json({error:"message is required"},{status:400});return NextResponse.json(await runAgent(message));}catch(e){return NextResponse.json({error:e instanceof Error?e.message:"agent error"},{status:500});}}
