@@ -1,0 +1,1 @@
+import {supabaseAdmin} from "./supabase";export async function getUser(userId:string){const {data,error}=await supabaseAdmin.auth.admin.getUserById(userId);if(error)throw error;return data.user;}
