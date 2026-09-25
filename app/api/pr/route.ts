@@ -1,3 +1,3 @@
 import {NextResponse} from "next/server";
-import {createPullRequest} from "@/lib/github";
-export async function POST(req:Request){const b=await req.json();if(!b?.branch||!b?.title)return NextResponse.json({error:"branch and title are required"},{status:400});const pr=await createPullRequest(String(b.branch),String(b.title),String(b.body||""));return NextResponse.json(pr);}
+import {createPullRequest} from "@/lib/github";import {getApproval} from "@/lib/upstash";import {requireApproval,safeRepoPath} from "@/lib/security";
+export async function POST(req:Request){try{const b=await req.json();if(!b?.approvalId||!b?.branch||!b?.title)return NextResponse.json({error:"approvalId, branch and title are required"},{status:400});safeRepoPath(String(b.branch));const approval=await getApproval(String(b.approvalId)) as {approved?:boolean}|null;requireApproval(Boolean(approval?.approved));const pr=await createPullRequest(String(b.branch),String(b.title),String(b.body||""));return NextResponse.json(pr);}catch(error){return NextResponse.json({error:error instanceof Error?error.message:"request failed"},{status:403});}}
