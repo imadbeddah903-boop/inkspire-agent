@@ -1,0 +1,1 @@
+import {Ratelimit} from "@upstash/ratelimit";import {Redis} from "@upstash/redis";import {env} from "./env";const limiter=new Ratelimit({redis:new Redis({url:env.upstashUrl,token:env.upstashToken}),limiter:Ratelimit.slidingWindow(30,"1 m")});export async function checkRateLimit(id:string){const r=await limiter.limit(id);if(!r.success)throw new Error("rate limit exceeded");}
